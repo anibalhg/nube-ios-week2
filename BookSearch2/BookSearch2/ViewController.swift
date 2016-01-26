@@ -27,55 +27,75 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         
-        if let isbn = textField.text {
-            
+        self.lblError.text = ""
+        self.lblAutores.text = ""
+        self.lblTitulo.text = ""
+        self.imgPortada.image = nil
+        
+        let value = textField.text
+        
+        if  (value != nil && value != ""){
+        
+            self.view.makeToastActivity()
+            let isbn = value!
             let urls = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:\(isbn)"
             let url = NSURL(string: urls)!
             let session = NSURLSession.sharedSession()
+            
 
             let task = session.dataTaskWithURL(url, completionHandler: {data, response, error in
                 dispatch_async(dispatch_get_main_queue(), {
+                    self.view.hideToastActivity()
+                    
+                    
                     if error != nil {
-                        self.lblError.text = error!.localizedDescription
+                        self.lblError.text = "Problemas con Internet"
+                        self.view.makeToast(message: "Problemas con Internet")
                     }
                     else if data == nil {
                         self.lblError.text = "No se encontraron datos"
+                        self.view.makeToast(message: "No se encontraron datos")
                     }
                     else {
+                        
                         do {
                             let json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableLeaves)
                             let dict = json as! NSDictionary
-                            let book = dict["ISBN:\(isbn)"] as! NSDictionary
+                            if let book = dict["ISBN:\(isbn)"] as? NSDictionary {
                             
-                            self.lblTitulo.text = book["title"] as! String
                             
-                            let autores = book["authors"] as! NSArray
-                            var autoresStr = ""
-                            for autor in autores {
-                                let autorDict = autor as! NSDictionary
-                                let nombre = autorDict["name"] as! String
-                                autoresStr += "\(nombre), "
-                            }
-                            autoresStr = autoresStr.substringWithRange(Range<String.Index>(start: autoresStr.startIndex, end: autoresStr.endIndex.advancedBy(-2)))
-                            self.lblAutores.text = autoresStr
-                            
-                            let cover = book["cover"] as! NSDictionary?
-                            if cover != nil {
-                                let coverUrl = cover!["large"] as! String
-                                let url = NSURL(string: coverUrl)
-                                if let img = NSData(contentsOfURL: url!) {
-                                    self.imgPortada.image = UIImage(data: img)
+                                self.lblTitulo.text = book["title"] as? String
+                                
+                                let autores = book["authors"] as! NSArray
+                                var autoresStr = ""
+                                for autor in autores {
+                                    let autorDict = autor as! NSDictionary
+                                    let nombre = autorDict["name"] as! String
+                                    autoresStr += "\(nombre), "
+                                }
+                                autoresStr = autoresStr.substringWithRange(Range<String.Index>(start: autoresStr.startIndex, end: autoresStr.endIndex.advancedBy(-2)))
+                                self.lblAutores.text = autoresStr
+                                
+                                let cover = book["cover"] as! NSDictionary?
+                                if cover != nil {
+                                    let coverUrlStr = cover!["large"] as! String
+                                    let coverUrl = NSURL(string: coverUrlStr)
+                                    if let img = NSData(contentsOfURL: coverUrl!) {
+                                        self.imgPortada.image = UIImage(data: img)
+                                    }
+                                    else {
+                                        self.imgPortada.image = nil
+                                    }
                                 }
                                 else {
                                     self.imgPortada.image = nil
                                 }
+                            
                             }
                             else {
-                                self.imgPortada.image = nil
+                                self.lblError.text = "No se encontraron datos"
+                                self.view.makeToast(message: "No se encontraron datos")
                             }
-                            
-                            
-                            
                         }
                         catch _ {
                             
@@ -88,7 +108,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             return true
         }
         else {
-            self.lblError.text = "Debe introducir una ISBN"
+            self.view.makeToast(message: "Debe introducir una ISBN")
             return false
         }
     }

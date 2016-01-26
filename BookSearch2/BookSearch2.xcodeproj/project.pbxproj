@@ -12,6 +12,7 @@
 		D768DA851C5728020085F1FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D768DA831C5728020085F1FD /* Main.storyboard */; };
 		D768DA871C5728020085F1FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D768DA861C5728020085F1FD /* Assets.xcassets */; };
 		D768DA8A1C5728020085F1FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D768DA881C5728020085F1FD /* LaunchScreen.storyboard */; };
+		D768DA941C574A510085F1FD /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D768DA931C574A510085F1FD /* HRToast+UIView.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		D768DA861C5728020085F1FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D768DA891C5728020085F1FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D768DA8B1C5728020085F1FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D768DA931C574A510085F1FD /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				D768DA7F1C5728020085F1FD /* AppDelegate.swift */,
 				D768DA811C5728020085F1FD /* ViewController.swift */,
+				D768DA931C574A510085F1FD /* HRToast+UIView.swift */,
 				D768DA831C5728020085F1FD /* Main.storyboard */,
 				D768DA861C5728020085F1FD /* Assets.xcassets */,
 				D768DA881C5728020085F1FD /* LaunchScreen.storyboard */,
@@ -136,6 +139,7 @@
 			files = (
 				D768DA821C5728020085F1FD /* ViewController.swift in Sources */,
 				D768DA801C5728020085F1FD /* AppDelegate.swift in Sources */,
+				D768DA941C574A510085F1FD /* HRToast+UIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
